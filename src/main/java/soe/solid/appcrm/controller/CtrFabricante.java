@@ -2,31 +2,31 @@ package soe.solid.appcrm.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import soe.solid.appcrm.model.Producto;
-import soe.solid.appcrm.service.IProductoService;
+import soe.solid.appcrm.model.Fabricante;
+import soe.solid.appcrm.service.spc.IFabricanteService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/fabricantes")
 @RequiredArgsConstructor
 public class CtrFabricante {
 
-    private final IProductoService productoService;
+    private final IFabricanteService service;
 
     @GetMapping
-    public List<Producto> listarProductos() throws Exception {
-        return productoService.listarProductos();
+    public List<Fabricante> listAll() throws Exception {
+        return service.listarTodos();
 
     }
     @GetMapping("/{id}")
-    public Producto readById(@PathVariable("id") Integer id   ) throws Exception {
-        return productoService.obtenerProductoPorId(id);
+    public Fabricante readById(@PathVariable("id") Integer id   ) throws Exception {
+        return service.obtenerPorId(id);
 
     }
     @PostMapping
-    public Producto save(@RequestBody  Producto producto   ) throws Exception {
-        return productoService.registrarProducto(producto);
+    public Fabricante save(@RequestBody  Fabricante producto   ) throws Exception {
+        return service.registrar(producto);
 
     }
 }

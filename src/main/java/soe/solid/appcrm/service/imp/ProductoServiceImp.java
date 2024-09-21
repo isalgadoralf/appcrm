@@ -1,9 +1,10 @@
-package soe.solid.appcrm.service;
+package soe.solid.appcrm.service.imp;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import soe.solid.appcrm.model.Producto;
 import soe.solid.appcrm.repository.IProductoRepo;
+import soe.solid.appcrm.service.spc.IProductoService;
 
 import java.util.List;
 @Service
@@ -12,18 +13,18 @@ public class ProductoServiceImp implements IProductoService {
 
     private final IProductoRepo productoRepo;
     @Override
-    public Producto registrarProducto(Producto producto) throws Exception {
+    public Producto registrar(Producto producto) throws Exception {
          productoRepo.save(producto);
          return producto;
     }
 
     @Override
-    public Producto obtenerProductoPorId(Integer id) throws Exception {
+    public Producto obtenerPorId(Integer id) throws Exception {
         return productoRepo.findById(id).orElse(new Producto());
     }
 
     @Override
-    public List<Producto> listarProductos() throws Exception {
+    public List<Producto> listarTodos() throws Exception {
         return productoRepo.findAll();
     }
 }
