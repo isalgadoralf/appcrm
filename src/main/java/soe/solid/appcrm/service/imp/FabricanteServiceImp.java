@@ -24,7 +24,7 @@ public class FabricanteServiceImp implements IFabricanteService {
 
     @Override
     public Fabricante obtenerPorId(Integer id) throws Exception {
-        return repo.findById(id).orElse(new Fabricante());
+        return repo.findById(id).orElse(null);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package soe.solid.appcrm.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -30,4 +27,9 @@ public class Producto {
     private double precioLista;
     private String codBarra;
     private String skuAlternante;
+
+    @ManyToOne
+    @JoinColumn(name = "fabricante_id", nullable = false, foreignKey = @ForeignKey(name = "FK_producto_fabricante"))
+    private Fabricante fabricante;
+
 }
