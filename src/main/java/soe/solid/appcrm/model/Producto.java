@@ -32,4 +32,8 @@ public class Producto {
     @JoinColumn(name = "fabricante_id", nullable = false, foreignKey = @ForeignKey(name = "FK_producto_fabricante"))
     private Fabricante fabricante;
 
+    @ManyToOne
+    @JoinColumn(name = "almacen_id", nullable = false, foreignKey = @ForeignKey(name = "FK_producto_almacen"))
+    private Almacen almacen;
+
 }
