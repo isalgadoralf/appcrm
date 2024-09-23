@@ -24,7 +24,7 @@ public class Cliente {
 
 
     @ManyToOne
-    @JoinColumn(name = "grupo_cliente_gruu_cliente_id", nullable = false, foreignKey = @ForeignKey(name = "FK_cliente_grupo_cliente"))
+    @JoinColumn(name = "grupo_cliente_id", nullable = false, foreignKey = @ForeignKey(name = "FK_cliente_grupo_cliente"))
     private GrupoCliente grupoCliente;
 
 }
