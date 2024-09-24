@@ -20,7 +20,7 @@ public class VentaServiceImp implements IVentaService {
 
 
     @Override
-    public void registrar(Venta venta)  {
+    public ResponseDto registrar(Venta venta)  {
         Cliente cliente = repoCliente.findById(venta.getCliente().getClienteId())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
         Almacen almacen = repoAlamacen.findById(venta.getAlmacen().getAlmacenId())
@@ -37,5 +37,6 @@ public class VentaServiceImp implements IVentaService {
         venta.setFormaEntrega(formaEntrega);
 
         repoVenta.save(venta);  // Guardar la venta
+        return new ResponseDto(0,"Venta registrada correctamente");
     }
 }

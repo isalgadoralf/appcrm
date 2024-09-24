@@ -66,12 +66,21 @@ class VentaServiceImpTest {
         venta.setFormaEntrega(formaEntrega);
 
         // Llamada al método a probar
-        ventaServiceImp.registrar(venta);
+        ResponseDto response = ventaServiceImp.registrar(venta);
+//        when(ventaRepo.save(venta)).thenReturn(venta);
+        //when(ventaServiceImp.registrar(venta)).thenReturn(responseDto);
+
+        //ventaServiceImp.registrar(venta);
 
         verify(iClienteRepo).findById(1);
         verify(iAlmacenRepo).findById(1);
         verify(iFormaPagoRepo).findById(1);
         verify(iFormaEntregaRepo).findById(1);
+
+        assertNotNull(response);
+        assertEquals(0, response.getCodigo());
+        //ssertEquals("Venta registrada correctamente", response.getMensaje(
+
 
         // Opcionalmente, verificar el estado de la venta o cualquier otra lógica de negocio.
         assert("Pendiente".equals(venta.getEstado()));
