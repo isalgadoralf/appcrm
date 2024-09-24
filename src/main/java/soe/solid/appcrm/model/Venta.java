@@ -19,6 +19,7 @@ public class Venta {
     private Integer ventaId;
     private Date fechaVenta;
     private Double total;
+    private Double descuentoGlobal;
     private String observaciones;
     private String estado;
 
