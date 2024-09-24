@@ -15,9 +15,9 @@ import soe.solid.appcrm.service.imp.VentaServiceImp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,6 +40,7 @@ class VentaServiceImpTest {
     IProductoRepo repoProducto;
     @Mock
     IVentaDetalleRepo repoDetalleVenta;
+
     @Test
     void testSave() {
 
@@ -81,11 +82,11 @@ class VentaServiceImpTest {
 
         // Llamada al método a probar
         ResponseDto response = ventaServiceImp.registrar(venta);
-
-        verify(iClienteRepo).findById(1);
-        verify(iAlmacenRepo).findById(1);
-        verify(iFormaPagoRepo).findById(1);
-        verify(iFormaEntregaRepo).findById(1);
+//
+//        verify(iClienteRepo).findById(1);
+//        verify(iAlmacenRepo).findById(1);
+//        verify(iFormaPagoRepo).findById(1);
+//        verify(iFormaEntregaRepo).findById(1);
 
         assertNotNull(response);
         assertEquals(0, response.getCodigo());

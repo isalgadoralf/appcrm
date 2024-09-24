@@ -22,15 +22,22 @@ public class VentaServiceImp implements IVentaService {
 
     @Override
     public ResponseDto registrar(Venta venta)  {
-        Cliente cliente = repoCliente.findById(venta.getCliente().getClienteId())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
-        Almacen almacen = repoAlamacen.findById(venta.getAlmacen().getAlmacenId())
-                .orElseThrow(() -> new IllegalArgumentException("Almacén no encontrado"));
-        FormaPago formaPago = repoFormaPago.findById(venta.getFormaPago().getFormaPagoId())
-                .orElseThrow(() -> new IllegalArgumentException("Forma de pago no encontrada"));
-        FormaEntrega formaEntrega = repoFormaEntrega.findById(venta.getFormaEntrega().getFormaEntregaId())
-                .orElseThrow(() -> new IllegalArgumentException("Forma de entrega no encontrada"));
-
+        Cliente cliente;
+        Almacen almacen;
+        FormaPago formaPago;
+        FormaEntrega formaEntrega;
+        try {
+            cliente = repoCliente.findById(venta.getCliente().getClienteId())
+                    .orElseThrow(() -> new IllegalArgumentException("Cliente no encontrado"));
+            almacen = repoAlamacen.findById(venta.getAlmacen().getAlmacenId())
+                    .orElseThrow(() -> new IllegalArgumentException("Almacén no encontrado"));
+            formaPago = repoFormaPago.findById(venta.getFormaPago().getFormaPagoId())
+                    .orElseThrow(() -> new IllegalArgumentException("Forma de pago no encontrada"));
+            formaEntrega = repoFormaEntrega.findById(venta.getFormaEntrega().getFormaEntregaId())
+                    .orElseThrow(() -> new IllegalArgumentException("Forma de entrega no encontrada"));
+        } catch (IllegalArgumentException e) {
+            return new ResponseDto(1, e.getMessage());
+        }
         // Asignar los valores correctos a la venta y guardar la venta
         venta.setCliente(cliente);
         venta.setAlmacen(almacen);
