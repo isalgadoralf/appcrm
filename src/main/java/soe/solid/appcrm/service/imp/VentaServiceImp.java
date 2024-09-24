@@ -42,6 +42,7 @@ public class VentaServiceImp implements IVentaService {
 
         return new ResponseDto(0,"Venta registrada correctamente");
     }
+
     private void registrarDetalle(Venta venta) {
         for (VentaDetalle detalle : venta.getLista()) {
             Producto producto = repoProducto.findById(detalle.getProductoId())
