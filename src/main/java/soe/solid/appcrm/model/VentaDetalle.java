@@ -20,6 +20,8 @@ public class VentaDetalle {
     private Double precio;
     private Double importe;
     private Double descuento;
+    @Transient
+    private Integer productoId;//temporal para registro de detalle
     @ManyToOne
     @JoinColumn(name = "prodcuto_id", nullable = false, foreignKey = @ForeignKey(name = "FK_venta_detalle_producto"))
     private Producto producto;

@@ -12,7 +12,9 @@ import soe.solid.appcrm.model.*;
 import soe.solid.appcrm.repository.*;
 import soe.solid.appcrm.service.imp.VentaServiceImp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -34,7 +36,10 @@ class VentaServiceImpTest {
     IClienteRepo iClienteRepo;
     @Mock
     IVentaRepo ventaRepo;
-
+    @Mock
+    IProductoRepo repoProducto;
+    @Mock
+    IVentaDetalleRepo repoDetalleVenta;
     @Test
     void testSave() {
 
@@ -65,12 +70,17 @@ class VentaServiceImpTest {
         venta.setFormaPago(formaPago);
         venta.setFormaEntrega(formaEntrega);
 
+        List<VentaDetalle> lista = new ArrayList<>();
+        VentaDetalle detalle = new VentaDetalle();
+        detalle.setProductoId(2);
+        detalle.setCantidad(1);
+        detalle.setImporte(100.0);
+        lista.add(detalle);
+        venta.setLista(lista);
+
+
         // Llamada al método a probar
         ResponseDto response = ventaServiceImp.registrar(venta);
-//        when(ventaRepo.save(venta)).thenReturn(venta);
-        //when(ventaServiceImp.registrar(venta)).thenReturn(responseDto);
-
-        //ventaServiceImp.registrar(venta);
 
         verify(iClienteRepo).findById(1);
         verify(iAlmacenRepo).findById(1);
@@ -79,10 +89,7 @@ class VentaServiceImpTest {
 
         assertNotNull(response);
         assertEquals(0, response.getCodigo());
-        //ssertEquals("Venta registrada correctamente", response.getMensaje(
 
-
-        // Opcionalmente, verificar el estado de la venta o cualquier otra lógica de negocio.
         assert("Pendiente".equals(venta.getEstado()));
         assertNotNull(venta.getFechaVenta());
         assertEquals(100.0, venta.getTotal());

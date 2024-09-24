@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ToString
@@ -22,6 +23,8 @@ public class Venta {
     private Double descuentoGlobal;
     private String observaciones;
     private String estado;
+    @Transient
+    private List<VentaDetalle> lista;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name = "FK_venta_cliente"))

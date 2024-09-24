@@ -16,7 +16,8 @@ public class VentaServiceImp implements IVentaService {
     private final IAlmacenRepo repoAlamacen;
     private final IFormaEntregaRepo repoFormaEntrega;
     private final IFormaPagoRepo repoFormaPago;
-
+    private final IProductoRepo repoProducto;
+    private final IVentaDetalleRepo repoDetalleVenta;
 
 
     @Override
@@ -35,8 +36,20 @@ public class VentaServiceImp implements IVentaService {
         venta.setAlmacen(almacen);
         venta.setFormaPago(formaPago);
         venta.setFormaEntrega(formaEntrega);
-
         repoVenta.save(venta);  // Guardar la venta
+
+        registrarDetalle(venta);  // Registrar los detalles de la venta
+
         return new ResponseDto(0,"Venta registrada correctamente");
     }
+    private void registrarDetalle(Venta venta) {
+        for (VentaDetalle detalle : venta.getLista()) {
+            Producto producto = repoProducto.findById(detalle.getProductoId())
+                    .orElse(new Producto());
+            detalle.setProducto(producto);
+            detalle.setVenta(venta);
+            repoDetalleVenta.save(detalle);
+          }
+    }
 }
+
