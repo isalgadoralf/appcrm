@@ -22,7 +22,7 @@ public class Venta {
     private Double total;
     private Double descuentoGlobal;
     private String observaciones;
-    private boolean recibeFactura;
+    private Double recibeFactura;
     private String estado;
     @Transient
     private List<VentaDetalle> lista;

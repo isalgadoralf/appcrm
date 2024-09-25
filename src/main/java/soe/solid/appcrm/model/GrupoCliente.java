@@ -18,5 +18,5 @@ public class GrupoCliente {
     @EqualsAndHashCode.Include
     private Integer gruuClienteId;
     private String nombre;
-    private double descuento;
+    private Double descuento;
 }
