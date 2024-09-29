@@ -16,7 +16,7 @@ public class ClienteServiceImp implements IClienteService {
 
     private final IClienteRepo repo;
     @Override
-    public Cliente registrar(Cliente producto) throws Exception {
+    public Cliente registrar(Cliente producto)  {
         repo.save(producto);
          return producto;
     }
@@ -29,5 +29,34 @@ public class ClienteServiceImp implements IClienteService {
     @Override
     public List<Cliente> listarTodos() throws Exception {
         return repo.findAll();
+    }
+
+    public String validarCliente(Cliente cliente) {
+        StringBuilder validationMessage = new StringBuilder();
+
+        if (cliente.getNombre() == null || cliente.getNombre().isEmpty()) {
+            validationMessage.append("Nombre es obligatorio, ");
+        }
+        if (cliente.getApellidos() == null || cliente.getApellidos().isEmpty()) {
+            validationMessage.append("Apellidos es obligatorio, ");
+        }
+        if (cliente.getNumDocumento() == null || cliente.getNumDocumento().isEmpty()) {
+            validationMessage.append("NumDocumento es obligatorio, ");
+        }
+        if (cliente.getTipoDocumento() == null || cliente.getTipoDocumento().isEmpty()) {
+            validationMessage.append("TipoDocumento  es obligatorio, ");
+        }
+        if (cliente.getCodCliente() == null || cliente.getCodCliente().isEmpty()) {
+            validationMessage.append("CodCliente es obligatorio, ");
+        }
+        if (cliente.getEmail() == null || cliente.getEmail().isEmpty()) {
+            validationMessage.append("Email es obligatorio, ");
+        }
+
+        if (validationMessage.length() > 0) {
+            validationMessage.setLength(validationMessage.length() - 2); // Remove trailing comma and space
+        }
+
+        return validationMessage.toString();
     }
 }

@@ -16,7 +16,9 @@ public class Cliente {
     @EqualsAndHashCode.Include
     private Integer clienteId;
     private String nombre;
-    private String Apellidos;
+    private String apellidos;
+    private String numDocumento;
+    private String tipoDocumento;
     private String codCliente;
     private String email;
     private String telefono;
@@ -24,7 +26,7 @@ public class Cliente {
 
 
     @ManyToOne
-    @JoinColumn(name = "grupo_cliente_id", nullable = false, foreignKey = @ForeignKey(name = "FK_cliente_grupo_cliente"))
+    @JoinColumn(name = "grupo_cliente_id", nullable = true, foreignKey = @ForeignKey(name = "FK_cliente_grupo_cliente"))
     private GrupoCliente grupoCliente;
 
 }

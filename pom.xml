@@ -23,6 +23,9 @@
 
 	<properties>
 		<java.version>17</java.version>
+		<serenity.version>4.1.10</serenity.version>
+		<cucumber.version>7.11.1</cucumber.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
 
@@ -67,7 +70,37 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.12</version>
 		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>net.serenity-bdd</groupId>-->
+<!--			<artifactId>serenity-cucumber</artifactId>-->
+<!--			<version>${serenity.version}</version>-->
+<!--		</dependency>-->
+
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>7.16.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>7.16.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>7.16.1</version>
+			<scope>test</scope>
+		</dependency>
+
+
 	</dependencies>
+
+
 
 	<build>
 		<plugins>
@@ -83,6 +116,19 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+<!--			<plugin>-->
+<!--				<groupId>net.serenity-bdd.maven.plugins</groupId>-->
+<!--				<artifactId>serenity-maven-plugin</artifactId>-->
+<!--				<version>${serenity.version}</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<goals>-->
+<!--							<goal>aggregate</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 
 			<plugin>
 				<groupId>org.jacoco</groupId>
