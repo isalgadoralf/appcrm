@@ -33,6 +33,15 @@ public class ClienteSeriviceImpTest {
     }
     @Test
     void testValidarFormatoCorreo() {
+        boolean valor = Valicaciones.validarCorreo("correo@tes.com");
+        assertEquals(true, valor);
+
+    }
+    @Test
+    void testValidarCI() {
+        boolean valor = Valicaciones.validarNumero("12314");
+        assertEquals(true, valor);
+
 
     }
 

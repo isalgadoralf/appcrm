@@ -3,8 +3,10 @@ package soe.solid.appcrm.service.imp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import soe.solid.appcrm.model.Cliente;
+import soe.solid.appcrm.model.ResponseDto;
 import soe.solid.appcrm.repository.IClienteRepo;
 import soe.solid.appcrm.repository.IFabricanteRepo;
+import soe.solid.appcrm.service.Valicaciones;
 import soe.solid.appcrm.service.spc.IClienteService;
 import soe.solid.appcrm.service.spc.IFabricanteService;
 
@@ -16,9 +18,22 @@ public class ClienteServiceImp implements IClienteService {
 
     private final IClienteRepo repo;
     @Override
-    public Cliente registrar(Cliente producto)  {
+    public ResponseDto registrar(Cliente producto)  {
+        String validationMessage = validarCliente(producto);
+        if (!validationMessage.isEmpty()) {
+            return new ResponseDto(1, validationMessage);
+        }
+        boolean validarCorreo = Valicaciones.validarCorreo(producto.getEmail());
+        if (!validarCorreo) {
+            return new ResponseDto(1, "Formato de correo no valido");
+        }
+        boolean validarNumero = Valicaciones.validarCorreo(producto.getNumDocumento());
+        if (!validarNumero) {
+            return new ResponseDto(1, "Numero de documento no valido");
+        }
+
         repo.save(producto);
-         return producto;
+        return new ResponseDto(0, "Cliente registrado correctamente");
     }
 
     @Override
@@ -59,4 +74,12 @@ public class ClienteServiceImp implements IClienteService {
 
         return validationMessage.toString();
     }
+
+    public String validarCorreo(String cliente) {
+        return "";
+    }
+    private boolean esNumerico(String str) {
+        return str != null && str.matches("\\d+");
+    }
+
 }
