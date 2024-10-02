@@ -22,7 +22,12 @@ public class CrtCliente {
 
     @PostMapping("/save")
     public ResponseEntity<ResponseDto> save(@RequestBody Cliente venta) {
-        return new ResponseEntity<>(clienteService.registrar(venta), HttpStatus.OK);
+        ResponseDto responseDto = clienteService.registrar(venta);
+        if (responseDto.getCodigo() == 0) {
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping
     public List<Cliente> listAll() throws Exception {
