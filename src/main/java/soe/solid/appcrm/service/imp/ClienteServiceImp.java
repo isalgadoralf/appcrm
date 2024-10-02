@@ -27,7 +27,7 @@ public class ClienteServiceImp implements IClienteService {
         if (!validarCorreo) {
             return new ResponseDto(1, "Formato de correo no valido");
         }
-        boolean validarNumero = Valicaciones.validarCorreo(producto.getNumDocumento());
+        boolean validarNumero = Valicaciones.validarNumero(producto.getNumDocumento());
         if (!validarNumero) {
             return new ResponseDto(1, "Numero de documento no valido");
         }
