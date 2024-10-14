@@ -16,24 +16,24 @@ public class Producto {
     private Integer productoId;
     private String sku;
     private String nombre;
-    private String nombreExtranjero;
-    private String codGrupoProducto;
-    private String nombreGrupoProducto;
-    private String skuFabricante;
-    private String nmbFabricante;
-    private String nmbProveedor;
-    private double peso;
-    private String um;
+    //private String nombreExtranjero;
+    //private String codGrupoProducto;
+    //private String nombreGrupoProducto;
+    //private String skuFabricante;
+    //private String nmbFabricante;
+    //private String nmbProveedor;
+    //private double peso;
+    //private String um;
     private double precioLista;
-    private String codBarra;
-    private String skuAlternante;
+    //private String codBarra;
+    //private String skuAlternante;
 
     @ManyToOne
     @JoinColumn(name = "fabricante_id", nullable = false, foreignKey = @ForeignKey(name = "FK_producto_fabricante"))
     private Fabricante fabricante;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "almacen_id", nullable = false, foreignKey = @ForeignKey(name = "FK_producto_almacen"))
-    private Almacen almacen;
+    private Almacen almacen;*/
 
 }

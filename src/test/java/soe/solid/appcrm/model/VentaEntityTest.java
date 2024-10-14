@@ -24,7 +24,7 @@ public class VentaEntityTest {
         venta1.setAlmacen(almacen);
         venta1.setFechaVenta(new Date());
         venta1.setTotal(100.0);
-        venta1.setEstado("Pendiente");
+      //  venta1.setEstado("Pendiente");
         venta1.setObservaciones("Observaciones");
         Venta venta2 = new Venta();
         venta2.setVentaId(1);

@@ -22,10 +22,9 @@ public class Venta {
     private Double total;
     private Double descuentoGlobal;
     private String observaciones;
-    private Double recibeFactura;
-    private String estado;
-    @Transient
-    private List<VentaDetalle> lista;
+    //private Double recibeFactura;
+    //private String estado;
+    //private List<VentaDetalle> lista;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false, foreignKey = @ForeignKey(name = "FK_venta_cliente"))
@@ -39,5 +38,8 @@ public class Venta {
     @ManyToOne
     @JoinColumn(name = "forma_entrega_id", nullable = false, foreignKey = @ForeignKey(name = "FK_venta_forma_entrega"))
     private FormaEntrega formaEntrega;
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = false, foreignKey = @ForeignKey(name = "FK_venta_producto"))
+    private Producto producto;
 
 }

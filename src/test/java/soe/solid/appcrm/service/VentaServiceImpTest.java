@@ -46,26 +46,26 @@ class VentaServiceImpTest {
 
         Cliente cliente = new Cliente();
         cliente.setClienteId(1);
-        when(iClienteRepo.findById(1)).thenReturn(java.util.Optional.of(cliente));
+        when(iClienteRepo.findById(1)).thenReturn(Optional.of(cliente));
 
         Almacen almacen = new Almacen();
         almacen.setAlmacenId(1);
-        when(iAlmacenRepo.findById(1)).thenReturn(java.util.Optional.of(almacen));
+        when(iAlmacenRepo.findById(1)).thenReturn(Optional.of(almacen));
 
         FormaPago formaPago = new FormaPago();
         formaPago.setFormaPagoId(1);
-        when(iFormaPagoRepo.findById(1)).thenReturn(java.util.Optional.of(formaPago));
+        when(iFormaPagoRepo.findById(1)).thenReturn(Optional.of(formaPago));
 
         FormaEntrega formaEntrega = new FormaEntrega();
         formaEntrega.setFormaEntregaId(1);
-        when(iFormaEntregaRepo.findById(1)).thenReturn(java.util.Optional.of(formaEntrega));
+        when(iFormaEntregaRepo.findById(1)).thenReturn(Optional.of(formaEntrega));
 
 
         Venta venta = new Venta();
         venta.setVentaId(1);
         venta.setFechaVenta(new Date());
         venta.setTotal(100.0);
-        venta.setEstado("Pendiente");
+       // venta.setEstado("Pendiente");
         venta.setCliente(cliente);
         venta.setAlmacen(almacen);
         venta.setFormaPago(formaPago);
@@ -77,7 +77,7 @@ class VentaServiceImpTest {
         detalle.setCantidad(1);
         detalle.setImporte(100.0);
         lista.add(detalle);
-        venta.setLista(lista);
+        //venta.setLista(lista);
 
 
         // Llamada al método a probar
@@ -91,7 +91,7 @@ class VentaServiceImpTest {
         assertNotNull(response);
         assertEquals(0, response.getCodigo());
 
-        assert("Pendiente".equals(venta.getEstado()));
+        //assert("Pendiente".equals(venta.getEstado()));
         assertNotNull(venta.getFechaVenta());
         assertEquals(100.0, venta.getTotal());
 
