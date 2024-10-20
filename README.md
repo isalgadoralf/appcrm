@@ -21,7 +21,7 @@ spring.datasource.password=developer
 ```
 
 ### Puerto del Servidor
-El servidor está configurado para ejecutarse en el puerto `9090`. Puedes cambiar esto en el archivo `src/main/resources/application.properties`.
+El servidor está configurado para ejecutarse en el puerto `9091`. Puedes cambiar esto en el archivo `src/main/resources/application.properties`.
 
 ```ini
 server.port=9091
