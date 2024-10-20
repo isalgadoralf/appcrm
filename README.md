@@ -4,7 +4,7 @@
 Este proyecto es una aplicación CRM (Customer Relationship Management) desarrollada con Spring Boot y Maven. La aplicación permite gestionar clientes, incluyendo la validación de campos obligatorios y la integración con una base de datos PostgreSQL.
 
 ## Requisitos
-- Java 17 
+- Java 21 
 - Maven 3.9.15
 - PostgreSQL 16 o superior
 
