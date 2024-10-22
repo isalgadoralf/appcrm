@@ -8,6 +8,10 @@ Este proyecto es una aplicación CRM (Customer Relationship Management) desarrol
 - Maven 3.9.15
 - PostgreSQL 16 o superior
 
+## Pluggins Jenkins
+- Maven Integration plugin - version 3.23
+
+
 ## Configuración
 ### Base de Datos
 1. Asegúrate de tener PostgreSQL instalado y en ejecución.
@@ -26,6 +30,20 @@ El servidor está configurado para ejecutarse en el puerto `9091`. Puedes cambia
 ```ini
 server.port=9091
 ```
+## Consideraciones para compilar con Jenkins
+* Para ejecutar la aplicación, se tiene que tener la base de datos PostgreSQL instalada y en ejecución, además de tener el archivo `application.properties` configurado con las credenciales de la base de datos.
+* Para compilar con Jenkins, se debe tener instalado el pluggin de Maven Integration plugin - version 3.23
+* Se debe tener configurado el JDK 21 en la máquina donde se va a ejecutar la aplicación generada por de Jenkins
+* los comandos de ejecución de la aplicación se deben ejecutar en la consola de comandos de Windows
+* Se tiene que tener disponible los puertos 9091
+
+## Ejecución de la aplicación después de compilar con Jenkins
+Para ejecutar la aplicación, se debe ir a la ubicación donde se encuentra el archivo jar generado por jenkins y ejecutar el siguiente comando:
+
+```sh
+start /B java -jar appcrm-0.0.1-SNAPSHOT.jar
+```
+
 
 ## Ejecución
 Para ejecutar la aplicación, usa el siguiente comando de Maven:
