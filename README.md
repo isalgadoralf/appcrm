@@ -14,20 +14,8 @@ Este proyecto es una aplicación CRM (Customer Relationship Management) desarrol
 ### Base de Datos
 1. Asegúrate de tener PostgreSQL instalado y en ejecución.
 2. Crea una base de datos llamada `dbsales`.
-3. Configura las credenciales de la base de datos en el archivo `src/main/resources/application.properties`.
 
-```ini
-spring.datasource.url=jdbc:postgresql://localhost:5432/dbsales
-spring.datasource.username=postgres
-spring.datasource.password=developer
-```
 
-### Puerto del Servidor
-El servidor está configurado para ejecutarse en el puerto `9091`. Puedes cambiar esto en el archivo `src/main/resources/application.properties`.
-
-```ini
-server.port=9091
-```
 ## Consideraciones para compilar con Jenkins
 * Para ejecutar la aplicación, se tiene que tener la base de datos PostgreSQL instalada y en ejecución, además de tener el archivo `application.properties` configurado con las credenciales de la base de datos.
 * Para compilar con Jenkins, se debe tener instalado el pluggin de Maven Integration plugin - version 3.23
