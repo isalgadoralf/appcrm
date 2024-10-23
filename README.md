@@ -8,8 +8,6 @@ Este proyecto es una aplicación CRM (Customer Relationship Management) desarrol
 - Maven 3.9.15
 - PostgreSQL 16 o superior
 
-## Pluggins Jenkins
-- Maven Integration plugin - version 3.23
 
 
 ## Configuración
@@ -37,13 +35,66 @@ server.port=9091
 * los comandos de ejecución de la aplicación se deben ejecutar en la consola de comandos de Windows
 * Se tiene que tener disponible los puertos 9091
 
+## Pluggins Jenkins
+- Maven Integration plugin - version 3.23
+
+## Configurar variables de entorno para en pipeline Jenkins
+* Se debe configurar las variables de entorno en el archivo `Jenkinsfile` para que la aplicación pueda conectarse a la base de datos.
+```groovy
+set "DB_USER=postgres"
+set "DB_PASS=D3v3l0p3r2023*"
+set "DB_URL=jdbc:postgresql://localhost:5432/dbsales"
+DEPLOY_DIR=D:\\deploy\\springboot_app  //Directorio donde se va a desplegar la aplicación
+```
+
+## Pipeline Jenkins
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Projecto') {
+            steps {
+                git(branch: "main", url: "https://github.com/isalgadoralf/appcrm.git")
+            }
+        }
+        stage('Set Application Properties') {
+            steps {
+                bat '''
+                set "DB_USER=postgres"
+                set "DB_PASS=D3v3l0p3r2023*"
+                set "DB_URL=jdbc:postgresql://localhost:5432/dbsales"
+                powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.username=.*', 'spring.datasource.username=%DB_USER%' | Set-Content src\\main\\resources\\application.properties"
+                powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.password=.*', 'spring.datasource.password=%DB_PASS%' | Set-Content src\\main\\resources\\application.properties"
+                powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.url=.*', 'spring.datasource.url=%DB_URL%' | Set-Content src\\main\\resources\\application.properties"
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                bat 'mvn clean install'
+            }
+        }
+        stage('Deploy to Local Directory') {
+            steps {
+                // Copiar el archivo JAR al directorio de despliegue especificado
+                bat '''
+                set DEPLOY_DIR=D:\\deploy\\springboot_app
+                if not exist %DEPLOY_DIR% mkdir %DEPLOY_DIR%
+                copy target\\*.jar %DEPLOY_DIR%
+                '''
+            }
+        }
+    }
+}
+```
+
 ## Ejecución de la aplicación después de compilar con Jenkins
 Para ejecutar la aplicación, se debe ir a la ubicación donde se encuentra el archivo jar generado por jenkins y ejecutar el siguiente comando:
 
 ```sh
 start /B java -jar appcrm-0.0.1-SNAPSHOT.jar
 ```
-
 
 ## Ejecución
 Para ejecutar la aplicación, usa el siguiente comando de Maven:
