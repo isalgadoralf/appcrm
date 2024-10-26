@@ -21,7 +21,7 @@ Este proyecto es una aplicación CRM (Customer Relationship Management) desarrol
 * Para compilar con Jenkins, se debe tener instalado el pluggin de Maven Integration plugin - version 3.23
 * Se debe tener configurado el JDK 21 en la máquina donde se va a ejecutar la aplicación generada por de Jenkins
 * los comandos de ejecución de la aplicación se deben ejecutar en la consola de comandos de Windows
-* Se tiene que tener disponible los puertos 9091
+* Se tiene que tener disponible los puertos 9091 o el puerto que se vaya configurar para la aplicación en la máquina donde se va a ejecutar la aplicación generada por Jenkins (Agregar regla de firewall si es necesario)
 
 
 ## Pluggins Jenkins
