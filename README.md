@@ -31,10 +31,14 @@ Este proyecto es una aplicación CRM (Customer Relationship Management) desarrol
 ## Configurar variables de entorno para en pipeline Jenkins
 * Se debe configurar las variables de entorno en el archivo `Jenkinsfile` para que la aplicación pueda conectarse a la base de datos.
 ```groovy
+
 set "DB_USER=postgres"
 set "DB_PASS=D3v3l0p3r2023*"
 set "DB_URL=jdbc:postgresql://localhost:5432/dbsales"
 DEPLOY_DIR=D:\\deploy\\springboot_app  //Directorio donde se va a desplegar la aplicación
+
+set "SERVER_PORT=9091"  //Puerto a exponer para la aplicación
+set "CROSS_ORIGIN=http://localhost:3000" //'Url de la aplicación front-end
 ```
 
 ## Pipeline Jenkins
@@ -45,6 +49,8 @@ pipeline {
 
     // Definimos los parámetros para las variables de la base de datos
     parameters {
+        string(name: 'SERVER_PORT', defaultValue: '9092', description: 'Puerto a exponer para la aplicación')
+        string(name: 'CROSS_ORIGIN', defaultValue: 'http://localhost:3000', description: 'Url de la aplicación front-end')
         string(name: 'DB_USER', defaultValue: 'postgres', description: 'Usuario de la base de datos')
         password(name: 'DB_PASS', defaultValue: 'D3v3l0p3r2023*', description: 'Contraseña de la base de datos')
         string(name: 'DB_URL', defaultValue: 'jdbc:postgresql://localhost:5432/dbsales', description: 'URL de la base de datos')
@@ -53,6 +59,8 @@ pipeline {
 
     environment {
         // Asignamos las variables de entorno para usarlas en las etapas
+        SERVER_PORT = "${params.SERVER_PORT}"
+        CROSS_ORIGIN = "${params.CROSS_ORIGIN}"
         DB_USER = "${params.DB_USER}"
         DB_PASS = "${params.DB_PASS}"
         DB_URL = "${params.DB_URL}"
@@ -71,6 +79,8 @@ pipeline {
             steps {
                 // Configura las propiedades de la base de datos en el archivo application.properties
                 bat """
+                powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'server.port=.*', 'server.port=${SERVER_PORT}' | Set-Content src\\main\\resources\\application.properties"
+                powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'cors.allowed-origin=.*', 'cors.allowed-origin=${CROSS_ORIGIN}' | Set-Content src\\main\\resources\\application.properties"
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.username=.*', 'spring.datasource.username=${DB_USER}' | Set-Content src\\main\\resources\\application.properties"
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.password=.*', 'spring.datasource.password=${DB_PASS}' | Set-Content src\\main\\resources\\application.properties"
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.url=.*', 'spring.datasource.url=${DB_URL}' | Set-Content src\\main\\resources\\application.properties"
@@ -99,24 +109,24 @@ pipeline {
             steps {
                 // Reinicia el JAR en segundo plano usando PowerShell
                 withEnv(['JENKINS_NODE_COOKIE=DontKillMe']) {
-                    powershell '''
-                    $DeployDir = 'D:\\deploy\\springboot_app'
-                    $JarFile = Get-ChildItem -Path $DeployDir -Filter *.jar | Select-Object -First 1
+                    powershell """
+                    \$DeployDir = '${DEPLOY_DIR}'
+                    \$JarFile = Get-ChildItem -Path \$DeployDir -Filter *.jar | Select-Object -First 1
 
                     # Verifica si ya hay un proceso Java ejecutándose
-                    $javaProcess = Get-Process -Name "java" -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "$DeployDir*" }
+                    \$javaProcess = Get-Process -Name "java" -ErrorAction SilentlyContinue | Where-Object { \$_.Path -like "\$DeployDir*" }
 
-                    if ($javaProcess -ne $null) {
+                    if (\$javaProcess -ne \$null) {
                         Write-Output "Deteniendo el proceso Java existente..."
-                        Stop-Process -Id $javaProcess.Id -Force
+                        Stop-Process -Id \$javaProcess.Id -Force
                     }
 
                     # Inicia el nuevo JAR en segundo plano
-                    if ($JarFile -ne $null) {
+                    if (\$JarFile -ne \$null) {
                         Write-Output "Iniciando el nuevo JAR en segundo plano..."
-                        Start-Process -FilePath "java" -ArgumentList "-jar $($JarFile.FullName)" -WindowStyle Hidden
+                        Start-Process -FilePath "java" -ArgumentList "-jar \$(\$JarFile.FullName)" -WindowStyle Hidden
                     }
-                    '''
+                    """
                 }
             }
         }
