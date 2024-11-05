@@ -61,26 +61,34 @@ pipeline {
 
         stage('Reiniciar JAR en Segundo Plano') {
             steps {
-                // Reinicia el JAR en segundo plano usando PowerShell
-                withEnv(['JENKINS_NODE_COOKIE=DontKillMe']) {
-                    powershell """
-                    \$DeployDir = '${DEPLOY_DIR}'
-                    \$JarFile = Get-ChildItem -Path \$DeployDir -Filter *.jar | Select-Object -First 1
+                script {
+                    withEnv(['JENKINS_NODE_COOKIE=DontKillMe']) {
+                        powershell """
+                        \$DeployDir = '${DEPLOY_DIR}'
+                        \$JarFile = Get-ChildItem -Path \$DeployDir -Filter *.jar | Select-Object -First 1
 
-                    # Verifica si ya hay un proceso Java ejecutándose
-                    \$javaProcess = Get-Process -Name "java" -ErrorAction SilentlyContinue | Where-Object { \$_.Path -like "\$DeployDir*" }
+                        if (\$JarFile -ne \$null) {
+                            # Encuentra el proceso Java específico que ejecuta el JAR
+                            \$javaProcess = Get-WmiObject Win32_Process | Where-Object {
+                                \$_.CommandLine -match "-jar.*\$JarFile"
+                            }
 
-                    if (\$javaProcess -ne \$null) {
-                        Write-Output "Deteniendo el proceso Java existente..."
-                        Stop-Process -Id \$javaProcess.Id -Force
+                            # Si se encuentra el proceso, se detiene
+                            if (\$javaProcess) {
+                                Write-Output "Deteniendo el proceso Java existente con PID: \$javaProcess.ProcessId"
+                                Stop-Process -Id \$javaProcess.ProcessId -Force
+                            } else {
+                                Write-Output "No se encontró un proceso Java en ejecución para detener."
+                            }
+
+                            # Inicia el nuevo JAR en segundo plano
+                            Write-Output "Iniciando el nuevo JAR en segundo plano..."
+                            Start-Process -FilePath "java" -ArgumentList "-jar \$(\$JarFile.FullName)" -WindowStyle Hidden
+                        } else {
+                            Write-Output "No se encontró ningún archivo JAR en el directorio de despliegue."
+                        }
+                        """
                     }
-
-                    # Inicia el nuevo JAR en segundo plano
-                    if (\$JarFile -ne \$null) {
-                        Write-Output "Iniciando el nuevo JAR en segundo plano..."
-                        Start-Process -FilePath "java" -ArgumentList "-jar \$(\$JarFile.FullName)" -WindowStyle Hidden
-                    }
-                    """
                 }
             }
         }
