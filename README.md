@@ -37,8 +37,8 @@ set "DB_PASS=D3v3l0p3r2023*"
 set "DB_URL=jdbc:postgresql://localhost:5432/dbsales"
 DEPLOY_DIR=D:\\deploy\\springboot_app  //Directorio donde se va a desplegar la aplicación
 
-set "SERVER_PORT=9091"  //Puerto a exponer para la aplicación
-set "CROSS_ORIGIN=http://localhost:3000" //'Url de la aplicación front-end
+set "SERVER_PORT=9092"  //Puerto a exponer para la aplicación
+set "CROSS_ORIGIN=http://localhost:80" //'Url de la aplicación front-end
 ```
 
 ## Pipeline Jenkins
@@ -50,11 +50,11 @@ pipeline {
     // Definimos los parámetros para las variables de la base de datos
     parameters {
         string(name: 'SERVER_PORT', defaultValue: '9092', description: 'Puerto a exponer para la aplicación')
-        string(name: 'CROSS_ORIGIN', defaultValue: 'http://localhost:3000', description: 'Url de la aplicación front-end')
+        string(name: 'CROSS_ORIGIN', defaultValue: 'http://localhost:80', description: 'Url de la aplicación front-end')
         string(name: 'DB_USER', defaultValue: 'postgres', description: 'Usuario de la base de datos')
         password(name: 'DB_PASS', defaultValue: 'D3v3l0p3r2023*', description: 'Contraseña de la base de datos')
         string(name: 'DB_URL', defaultValue: 'jdbc:postgresql://localhost:5432/dbsales', description: 'URL de la base de datos')
-        string(name: 'DEPLOY_DIR', defaultValue: 'D:\\deploy\\springboot_app', description: 'Directorio de despliegue')
+        string(name: 'DEPLOY_DIR', defaultValue: 'C:\\deploy\\springboot_app', description: 'Directorio de despliegue')
     }
 
     environment {
