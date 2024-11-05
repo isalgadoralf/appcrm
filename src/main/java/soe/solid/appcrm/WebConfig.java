@@ -1,6 +1,10 @@
 package soe.solid.appcrm;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,10 +19,36 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         System.out.println("allowedOrigin: " + allowedOrigin);
         registry.addMapping("/**")
-                .allowedOrigins(allowedOrigin)
+                .allowedOriginPatterns(allowedOrigin)
                 .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .exposedHeaders("Access-Control-Allow-Origin")
-                .allowCredentials(false);
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+                .allowedHeaders("*")
+                .exposedHeaders("*")
+                .maxAge(3600);
     }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+
+        // Permite cualquier origen
+        config.addAllowedOriginPattern("*");
+
+        // Permite todos los métodos HTTP
+        config.addAllowedMethod("*");
+
+        // Permite todas las cabeceras
+        config.addAllowedHeader("*");
+
+        // Expone todas las cabeceras
+        config.addExposedHeader("*");
+
+        // Tiempo de cache para la respuesta preflight
+        config.setMaxAge(3600L);
+
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
 }
