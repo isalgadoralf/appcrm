@@ -33,7 +33,6 @@ pipeline {
                 // Configura las propiedades de la base de datos en el archivo application.properties
                 bat """
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'server.port=.*', 'server.port=${SERVER_PORT}' | Set-Content src\\main\\resources\\application.properties"
-                powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'cors.allowed-origin=.*', 'cors.allowed-origin=${CROSS_ORIGIN}' | Set-Content src\\main\\resources\\application.properties"
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.username=.*', 'spring.datasource.username=${DB_USER}' | Set-Content src\\main\\resources\\application.properties"
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.password=.*', 'spring.datasource.password=${DB_PASS}' | Set-Content src\\main\\resources\\application.properties"
                 powershell -Command "(Get-Content src\\main\\resources\\application.properties) -replace 'spring.datasource.url=.*', 'spring.datasource.url=${DB_URL}' | Set-Content src\\main\\resources\\application.properties"
