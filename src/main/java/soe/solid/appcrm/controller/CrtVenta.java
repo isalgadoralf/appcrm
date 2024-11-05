@@ -20,7 +20,7 @@ public class CrtVenta {
     private final IVentaService ventaService;
     @GetMapping
     public ResponseEntity<String> listAll()  {
-        return new ResponseEntity<>("Servicio de venta.....", HttpStatus.OK);
+        return new ResponseEntity<>("Servicio de VENTA...", HttpStatus.OK);
 
     }
     @PostMapping("/save")
