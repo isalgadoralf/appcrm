@@ -18,7 +18,7 @@ import java.util.List;
 public class CrtVenta {
 
     private final IVentaService ventaService;
-    @GetMapping
+   // @GetMapping
     public ResponseEntity<String> listAll()  {
         return new ResponseEntity<>("Servicio de VENTA...", HttpStatus.OK);
 
@@ -26,5 +26,9 @@ public class CrtVenta {
     @PostMapping("/save")
     public ResponseEntity<ResponseDto> save(@RequestBody Venta venta) {
         return new ResponseEntity<>(ventaService.registrar(venta), HttpStatus.OK);
+    }
+    @GetMapping
+    public ResponseEntity<?> list() {
+        return new ResponseEntity<>(ventaService.listarVentas(), HttpStatus.OK);
     }
 }

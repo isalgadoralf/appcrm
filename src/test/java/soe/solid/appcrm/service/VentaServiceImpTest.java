@@ -41,6 +41,7 @@ class VentaServiceImpTest {
     @Mock
     IVentaDetalleRepo repoDetalleVenta;
 
+
     @Test
     void testSave() {
 
@@ -95,6 +96,17 @@ class VentaServiceImpTest {
         assertNotNull(venta.getFechaVenta());
         assertEquals(100.0, venta.getTotal());
 
+    }
+
+    @Test
+    void testListarVentas() {
+//        List<Venta> ventas = new ArrayList<>();
+//        when(ventaRepo.findAll()).thenReturn(ventas);
+
+        List<Venta> lista = ventaServiceImp.listarVentas();
+
+        assertNotNull(lista);
+        //assertEquals(ventas, lista);
     }
 
 

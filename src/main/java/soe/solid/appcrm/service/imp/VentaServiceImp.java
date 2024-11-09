@@ -7,6 +7,9 @@ import soe.solid.appcrm.model.*;
 import soe.solid.appcrm.repository.*;
 import soe.solid.appcrm.service.spc.IVentaService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class VentaServiceImp implements IVentaService {
@@ -58,5 +61,9 @@ public class VentaServiceImp implements IVentaService {
             repoDetalleVenta.save(detalle);
           }
     }*/
+
+    public List<Venta> listarVentas() {
+        return repoVenta.findAll();
+    }
 }
 

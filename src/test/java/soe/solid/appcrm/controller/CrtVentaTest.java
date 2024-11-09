@@ -35,4 +35,11 @@ public class CrtVentaTest {
         assertNotNull(bo);
         assertEquals(responseDto,bo);
     }
+    @Test
+    void testListarVentas() {
+        when(ventaServiceImp.listarVentas()).thenReturn(null);
+        ResponseEntity<?> response = crtVenta.list();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+
+    }
 }
